@@ -1,47 +1,23 @@
-
-
-import os
-
+imort os
 
 class Config(object):
-    """
-        Parent configuration class.
-    """
-    DEBUG = False
-
-
-class DevelopmentConfig(Config):
-    """
-        Configurations for Development.
-    """
+    '''parent config file'''
     DEBUG = True
+    SECRET_KEY = 'nosecrethere'
 
 
-class TestingConfig(Config):
-    """
-        Configurations for Testing
-    """
+class Development(Config):
+    '''Configurations for development'''
+    Debug = True
+
+
+class Testing(Config):
+    '''configurations for testing with a separate test database'''
     TESTING = True
-    DEBUG = True
-
-class StagingConfig(Config):
-    """
-        Configurations for Staging.
-    """
-    DEBUG = True
-
-
-class ProductionConfig(Config):
-    """
-        Configurations for Production.
-    """
-    DEBUG = False
-    TESTING = False
+    Debug = True
 
 
 app_config = {
-    'development': DevelopmentConfig,
-    'testing': TestingConfig,
-    'staging': StagingConfig,
-    'production': ProductionConfig,
+    'development': Development,
+    'testing': Testing
 }
