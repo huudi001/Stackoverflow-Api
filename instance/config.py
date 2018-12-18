@@ -1,4 +1,4 @@
-imort os
+import os
 
 class Config(object):
     '''parent config file'''
