@@ -1,15 +1,15 @@
 from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
- USERS_LIST = []
+USERS_LIST = []
 
- class Users():
-     def put(self, name, username, email, password):
-         self.single_user = {}
+class Users():
+    def put(self, name, username, email, password):
+        self.single_user = {}
 
-         email_data = [user for user in USERS_LIST if user["email"] == email]
-         username_data = [user for user in USERS_LIST if user["username"] == username]
+        email_data = [user for user in USERS_LIST if user["email"] == email]
+        username_data = [user for user in USERS_LIST if user["username"] == username]
 
-         if "message" not in email_data:
+        if "message" not in email_data:
              return {"message": "Email already exists"}
         if "message" not in username_data:
             return {"message": "Username already exists"}
@@ -23,7 +23,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
         return {"message": "User with username {} added succesfully".format(username)}
 
-    def password_validation(self,username,password):
+    def password_validation(self, username, password):
         user = [user for user in USERS_LIST if user["username"] == username]
         if "message" not in user:
             valid = check_password_hash(
@@ -35,7 +35,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
     def get_single_user(self, username):
         user = [user for user in USERS_LIST if user["username"] == username]
-        return user
+        if "message" not in user:
+            return user
+        return {"message": "User is not our  in record"}
 
     def get_all_users(self):
         return USERS_LIST

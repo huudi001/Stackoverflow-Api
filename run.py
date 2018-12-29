@@ -1,5 +1,5 @@
 import os
-from app import create_app
+from app import create_app       
 
 CONFIG_NAME = 'development'
 app = create_app(CONFIG_NAME)

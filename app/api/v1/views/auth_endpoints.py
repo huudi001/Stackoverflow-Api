@@ -1,9 +1,9 @@
 import re
-from Flask import flask, request, jsonify, make_response , Blueprint
+from flask import Flask, request, jsonify, make_response , Blueprint
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token, get_raw_jwt)
 from ..models import users
-auth = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
+auth = Blueprint('auth', __name__, url_prefix='/api/v1')
 
 BLACKLIST = set()
 User = users.Users()
@@ -75,6 +75,6 @@ def get_all_users():
 @auth.route('/users/<username>', methods=['GET'])
 def get_user_by_username(username):
     response = make_response(
-        jsonify(User.get_user_by_username(username)))
+        jsonify(User.get_single_user(username)))
     response.status_code = 200
     return response
