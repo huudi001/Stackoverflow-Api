@@ -33,7 +33,7 @@ class Users():
             return {"message": "The password you entered is incorrect"}
         return user
 
-    def get_single_user(self, username):
+    def get_user_by_username(self, username):
         user = [user for user in USERS_LIST if user["username"] == username]
         if "message" not in user:
             return user

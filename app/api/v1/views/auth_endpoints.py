@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, make_response , Blueprint
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token, get_raw_jwt)
 from ..models import users
-auth = Blueprint('auth', __name__, url_prefix='/api/v1')
+auth = Blueprint('auth', __name__, url_prefix='/api/v1/')
 
 BLACKLIST = set()
 User = users.Users()
@@ -47,9 +47,9 @@ def login():
     if not username or not password:
         return jsonify({"message": "Username or password is missing"}),206
     validated = User.password_validation(username,password)
-    user = User.get_single_user(username)
-    if validated == "True":
-        acces_token = create_access_token(idenity=user)
+    user = User.get_user_by_username(username)
+    if validated:
+        acces_token = create_access_token(identity=user)
         return jsonify(dict(token=acces_token, message="Login seccesfull")), 200
     response = jsonify(validated)
     response.status_code  = 401
@@ -75,6 +75,6 @@ def get_all_users():
 @auth.route('/users/<username>', methods=['GET'])
 def get_user_by_username(username):
     response = make_response(
-        jsonify(User.get_single_user(username)))
+        jsonify(User.get_user_by_username(username)))
     response.status_code = 200
     return response
